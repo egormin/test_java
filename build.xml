@@ -1,0 +1,37 @@
+<project name="JavaProject" default="dist" basedir=".">
+
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist" location="dist"/>
+  <property name="lib-dir" value="module3/ant-task/lib"/>
+  <property name="reports" value="reports"/>
+
+  <target name="init">
+    <mkdir dir="${build}"/>    
+  </target>
+
+  <target name="compile" depends="init" >
+    <javac srcdir="${src}" destdir="${build}" />
+    <echo>Files were compiled in ${build}</echo>
+  </target>
+
+  <target name="dist" depends="compile" >
+    <mkdir dir="${build}"/>
+    <jar jarfile="${build}/testProject.jar" basedir="${build}"/>
+    <echo>testProject.jar was created in ${dist}/lib/ </echo>
+  </target>
+
+<target name="pack" depends="dist" >
+  <tar destfile="${build}/testProject.tar" basedir="${build}"/>
+  <gzip destfile="${build}/testProject.tar.gz" src="${build}/testProject.tar"/>
+  <delete file="${dist}/lib/testProject.tar"/>
+</target>
+
+
+
+  <target name="clean">
+    <delete dir="${build}"/>
+  </target>
+
+
+</project>
